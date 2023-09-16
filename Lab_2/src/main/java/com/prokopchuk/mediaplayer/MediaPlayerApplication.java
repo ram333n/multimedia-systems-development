@@ -15,7 +15,7 @@ public class MediaPlayerApplication extends Application {
 
   @Override
   public void start(Stage stage) throws IOException {
-    FXMLLoader fxmlLoader = new FXMLLoader(MediaPlayerApplication.class.getResource("hello-view.fxml"));
+    FXMLLoader fxmlLoader = new FXMLLoader(MediaPlayerApplication.class.getResource("media-player-view.fxml"));
     Scene scene = new Scene(fxmlLoader.load(), SCENE_WIDTH, SCENE_HEIGHT);
     stage.setTitle(STAGE_TITLE);
     stage.setScene(scene);

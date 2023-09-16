@@ -2,9 +2,6 @@ package com.prokopchuk.mediaplayer;
 
 import java.util.List;
 import java.util.Objects;
-import javafx.application.Platform;
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.DoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -44,6 +41,7 @@ public class MainController {
       return;
     }
 
+    clearPreviousData();
     initMediaView(filePath);
     initVolumeSlider();
     initPlayerSlider();
@@ -57,16 +55,15 @@ public class MainController {
     return fileChooser.showOpenDialog(null).toURI().toString();
   }
 
+  private void clearPreviousData() {
+    this.playerSlider.setValue(0);
+    this.durationLabel.setText(durationDataFormatter.stringifyEmpty());
+  }
+
   private void initMediaView(String filePath) {
     Media media = new Media(filePath);
     this.mediaPlayer = new MediaPlayer(media);
     this.mediaView.setMediaPlayer(mediaPlayer);
-
-    DoubleProperty widthProp = mediaView.fitWidthProperty();
-    DoubleProperty heightProp = mediaView.fitHeightProperty();
-
-    widthProp.bind(Bindings.selectDouble(mediaView.sceneProperty(), "width"));
-    heightProp.bind(Bindings.selectDouble(mediaView.sceneProperty(), "height"));
 
     this.mediaPlayer.currentTimeProperty().addListener(observable -> refreshSlider());
   }
@@ -135,9 +132,18 @@ public class MainController {
   private static class DurationDataFormatter {
     private static final String SEPARATOR_FOR_TIMEUNITS = ":";
     private static final String SEPARATOR_FOR_DURATIONS = "/";
-    private static final String SEPARATOR_FOR_PLACEHOLDER = "-";
-    private static final String EMPTY_DURATIONS
-        = String.format("%s%s%s", SEPARATOR_FOR_PLACEHOLDER.repeat(2), SEPARATOR_FOR_DURATIONS, SEPARATOR_FOR_PLACEHOLDER.repeat(2));
+    private static final String TIMEUNIT_PLACEHOLDER = "-";
+    private static final String EMPTY_DURATIONS = initEmptyDurations();
+
+    private static String initEmptyDurations() {
+      return TIMEUNIT_PLACEHOLDER.repeat(2)
+          + SEPARATOR_FOR_TIMEUNITS
+          + TIMEUNIT_PLACEHOLDER.repeat(2)
+          + SEPARATOR_FOR_DURATIONS
+          + TIMEUNIT_PLACEHOLDER.repeat(2)
+          + SEPARATOR_FOR_TIMEUNITS
+          + TIMEUNIT_PLACEHOLDER.repeat(2);
+    }
 
     public String getDurationsString(Duration currentDuration, Duration totalDuration) {
       String currentDurationString = stringifyDuration(currentDuration);

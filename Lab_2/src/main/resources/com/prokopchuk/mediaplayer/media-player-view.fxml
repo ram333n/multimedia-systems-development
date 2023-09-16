@@ -6,31 +6,26 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.media.MediaView?>
 
-<VBox alignment="CENTER" prefHeight="761.0" prefWidth="1064.0" spacing="20.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.prokopchuk.mediaplayer.MainController">
+<VBox alignment="CENTER" maxHeight="900.0" maxWidth="1200.0" prefHeight="761.0" prefWidth="653.0" spacing="20.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.prokopchuk.mediaplayer.MainController">
   <padding>
     <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
   </padding>
-   <HBox prefHeight="583.0" prefWidth="956.0">
+   <HBox maxHeight="583.0" maxWidth="956.0" prefHeight="583.0" prefWidth="956.0">
       <children>
-         <StackPane prefHeight="616.0" prefWidth="965.0" HBox.hgrow="ALWAYS">
-            <children>
-               <MediaView id="mediaView" fx:id="mediaView" fitHeight="550.0" fitWidth="920.0">
-                  <viewport>
-                     <Rectangle2D />
-                  </viewport>
-               </MediaView>
-            </children>
-         </StackPane>
+         <MediaView id="mediaView" fx:id="mediaView" fitHeight="550.0" fitWidth="1000.0">
+            <viewport>
+               <Rectangle2D />
+            </viewport>
+         </MediaView>
       </children>
    </HBox>
    <HBox prefHeight="32.0" prefWidth="480.0" spacing="10.0">
       <children>
          <Label id="durationLabel" fx:id="durationLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#onClickOpenButton" prefHeight="17.0" prefWidth="74.0" text="--:--/--:--" />
-         <Slider id="playerSlider" fx:id="playerSlider" prefHeight="16.0" HBox.hgrow="ALWAYS">
+         <Slider id="playerSlider" fx:id="playerSlider" maxHeight="20.0" prefHeight="16.0" HBox.hgrow="ALWAYS">
             <HBox.margin>
                <Insets bottom="10.0" />
             </HBox.margin>
@@ -40,7 +35,7 @@
          <Insets bottom="-40.0" />
       </VBox.margin>
    </HBox>
-   <HBox alignment="CENTER" prefHeight="55.0" prefWidth="947.0" spacing="10.0">
+   <HBox alignment="CENTER" minWidth="60.0" prefHeight="55.0" prefWidth="920.0" spacing="10.0">
       <children>
          <Button fx:id="openButton" mnemonicParsing="false" onAction="#onClickOpenButton" text="Open" />
          <Button id="playButton" fx:id="playButton" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onClickPlayButton" text="Play" />
