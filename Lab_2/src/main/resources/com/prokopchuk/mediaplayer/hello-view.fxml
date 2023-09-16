@@ -6,21 +6,31 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.media.MediaView?>
 
-<VBox alignment="CENTER" prefHeight="450.0" prefWidth="700.0" spacing="20.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.prokopchuk.mediaplayer.MainController">
+<VBox alignment="CENTER" prefHeight="761.0" prefWidth="1064.0" spacing="20.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.prokopchuk.mediaplayer.MainController">
   <padding>
     <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
   </padding>
-   <MediaView id="mediaView" fitHeight="200.0" fitWidth="200.0" VBox.vgrow="ALWAYS">
-      <viewport>
-         <Rectangle2D />
-      </viewport></MediaView>
+   <HBox prefHeight="583.0" prefWidth="956.0">
+      <children>
+         <StackPane prefHeight="616.0" prefWidth="965.0" HBox.hgrow="ALWAYS">
+            <children>
+               <MediaView id="mediaView" fx:id="mediaView" fitHeight="550.0" fitWidth="920.0">
+                  <viewport>
+                     <Rectangle2D />
+                  </viewport>
+               </MediaView>
+            </children>
+         </StackPane>
+      </children>
+   </HBox>
    <HBox prefHeight="32.0" prefWidth="480.0" spacing="10.0">
       <children>
-         <Label id="durationLabel" contentDisplay="CENTER" prefHeight="8.0" prefWidth="50.0" text="--:--/--:--" />
-         <Slider id="playerSlider" prefHeight="16.0" HBox.hgrow="ALWAYS">
+         <Label id="durationLabel" fx:id="durationLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#onClickOpenButton" prefHeight="17.0" prefWidth="74.0" text="--:--/--:--" />
+         <Slider id="playerSlider" fx:id="playerSlider" prefHeight="16.0" HBox.hgrow="ALWAYS">
             <HBox.margin>
                <Insets bottom="10.0" />
             </HBox.margin>
@@ -30,23 +40,23 @@
          <Insets bottom="-40.0" />
       </VBox.margin>
    </HBox>
-   <HBox alignment="CENTER" prefHeight="55.0" prefWidth="480.0" spacing="10.0">
+   <HBox alignment="CENTER" prefHeight="55.0" prefWidth="947.0" spacing="10.0">
       <children>
-         <Button mnemonicParsing="false" text="Open" />
-         <Button id="playButton" alignment="TOP_LEFT" mnemonicParsing="false" text="Play" />
-         <Button alignment="TOP_LEFT" mnemonicParsing="false" text="Pause" />
-         <Button alignment="TOP_LEFT" mnemonicParsing="false" text="Stop" />
-         <Button id="skipBackButton" alignment="TOP_LEFT" mnemonicParsing="false" text="-10 sec" />
-         <Button id="skipForwardButton" alignment="TOP_LEFT" mnemonicParsing="false" text="+10 sec" />
+         <Button fx:id="openButton" mnemonicParsing="false" onAction="#onClickOpenButton" text="Open" />
+         <Button id="playButton" fx:id="playButton" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onClickPlayButton" text="Play" />
+         <Button fx:id="pauseButton" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onClickPauseButton" text="Pause" />
+         <Button fx:id="stopButton" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onClickStopButton" text="Stop" />
+         <Button id="skipBackButton" fx:id="skipBackButton" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onClickSkipBackButton" text="-10 sec" />
+         <Button id="skipForwardButton" fx:id="skipForwardButton" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#onClickSkipForwardButton" text="+10 sec" />
          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
             <children>
                <Label text="Volume: " />
-               <Slider id="volumeSlider" />
+               <Slider id="volumeSlider" fx:id="volumeSlider" />
             </children>
          </HBox>
       </children>
       <VBox.margin>
-         <Insets bottom="-80.0" />
+         <Insets />
       </VBox.margin>
    </HBox>
 </VBox>

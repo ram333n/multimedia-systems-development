@@ -9,8 +9,8 @@ import java.io.IOException;
 
 public class MediaPlayerApplication extends Application {
 
-  private static final int SCENE_WIDTH = 700;
-  private static final int SCENE_HEIGHT = 450;
+  private static final int SCENE_WIDTH = 1200;
+  private static final int SCENE_HEIGHT = 900;
   private static final String STAGE_TITLE = "Media player";
 
   @Override
