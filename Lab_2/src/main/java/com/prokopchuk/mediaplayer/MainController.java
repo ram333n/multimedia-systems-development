@@ -6,15 +6,18 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextArea;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 
 public class MainController {
 
-  private static final List<String> SUPPORTED_EXTENTIONS = List.of("*.mp4", "*.mp3", "*.wav");
+  private static final List<String> SUPPORTED_EXTENTIONS = List.of("*.mp4", "*.mp3", "*.wav", "*.aifff");
   private static final int SKIP_BACK_SECONDS = -10;
   private static final int SKIP_FORWARD_SECONDS = 10;
 
@@ -30,21 +33,49 @@ public class MainController {
   @FXML
   private MediaView mediaView;
 
+  @FXML
+  private WebView webView;
+
+  @FXML
+  private TextArea linkTextField;
+
   private MediaPlayer mediaPlayer;
   private final DurationDataFormatter durationDataFormatter = new DurationDataFormatter();
 
   @FXML
   private void onClickOpenButton(ActionEvent event) {
+    clearPreviousView();
     String filePath = selectFile();
 
     if (Objects.isNull(filePath)) {
       return;
     }
 
-    clearPreviousData();
+    clearPreviousSliderData();
     initMediaView(filePath);
     initVolumeSlider();
     initPlayerSlider();
+  }
+
+  @FXML
+  private void onClickOpenByLinkButton(ActionEvent event) {
+    clearPreviousView();
+
+    this.webView.setVisible(true);
+    WebEngine engine = this.webView.getEngine();
+    engine.load(this.linkTextField.getText());
+  }
+
+  private void clearPreviousView() {
+    if (Objects.nonNull(this.mediaPlayer)) {
+      this.mediaPlayer.stop();
+      this.mediaPlayer = null;
+    }
+
+    clearPreviousSliderData();
+    this.mediaView.setMediaPlayer(null);
+    this.mediaView.setVisible(false);
+    this.webView.setVisible(false);
   }
 
   private String selectFile() {
@@ -55,15 +86,16 @@ public class MainController {
     return fileChooser.showOpenDialog(null).toURI().toString();
   }
 
-  private void clearPreviousData() {
+  private void clearPreviousSliderData() {
     this.playerSlider.setValue(0);
-    this.durationLabel.setText(durationDataFormatter.stringifyEmpty());
+    this.durationLabel.setText(this.durationDataFormatter.stringifyEmpty());
   }
 
   private void initMediaView(String filePath) {
     Media media = new Media(filePath);
     this.mediaPlayer = new MediaPlayer(media);
     this.mediaView.setMediaPlayer(mediaPlayer);
+    this.mediaView.setVisible(true);
 
     this.mediaPlayer.currentTimeProperty().addListener(observable -> refreshSlider());
   }
